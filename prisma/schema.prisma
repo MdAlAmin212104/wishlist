@@ -31,7 +31,16 @@ model Session {
   emailVerified Boolean?  @default(false)
 }
 model settings {
-  id            String    @id
+  id            Int    @id @default(autoincrement())
   name          String
   description   String?
+}
+
+
+model Wishlist {
+  id            Int    @id @default(autoincrement())
+  customerId    String?
+  productId     String?
+  shop          String?
+  createAt      DateTime @default(now())
 }
