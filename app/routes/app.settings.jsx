@@ -12,20 +12,39 @@ import {
 import { useState, useEffect } from "react";
 import { json } from "@remix-run/node";
 
+
+// import prisma db
+import db from "../db.server"
+
 export async function loader() {
-  let settings = {
-    name: "My app",
-    description: "My app description",
-  };
+  let settings = await db.settings.findFirst();
+  console.log("settings------------------------->", settings);
   return json(settings);
 }
 
 export async function action({ request }) {
   const formData = await request.formData();
   const settings = Object.fromEntries(formData);
+
+  await db.settings.upsert({
+    where: {
+      id: "1"
+    },
+    update: {
+      id: "1",
+      name : settings.name,
+      description : settings.description
+    },
+    create: {
+      id: "1",
+      name: settings.name,
+      description: settings.description
+    }
+  })
   // Save to DB logic here...
   return json(settings);
 }
+
 
 export default function SettingsPage() {
   const loaderData = useLoaderData();
@@ -72,7 +91,7 @@ export default function SettingsPage() {
                 <TextField
                   label="Interjamb style"
                   name="name"
-                  value={formState.name}
+                  value={formState?.name}
                   onChange={(value) =>
                     setFormState({ ...formState, name: value })
                   }
@@ -80,7 +99,7 @@ export default function SettingsPage() {
                 <TextField
                   label="Interjamb ratio"
                   name="description"
-                  value={formState.description}
+                  value={formState?.description}
                   onChange={(value) =>
                     setFormState({ ...formState, description: value })
                   }
