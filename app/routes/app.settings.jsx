@@ -89,7 +89,7 @@ export default function SettingsPage() {
             <Form method="POST">
               <BlockStack gap="400">
                 <TextField
-                  label="Interjamb style"
+                  label="Title"
                   name="name"
                   value={formState?.name}
                   onChange={(value) =>
@@ -97,7 +97,7 @@ export default function SettingsPage() {
                   }
                 />
                 <TextField
-                  label="Interjamb ratio"
+                  label="description"
                   name="description"
                   value={formState?.description}
                   onChange={(value) =>
