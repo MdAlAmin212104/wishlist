@@ -1,26 +1,37 @@
 import { json } from "@remix-run/node";
 import { cors } from "remix-utils/cors";
+import db from "../db.server";
 
-import db from "../db.server"
+// Handle GET requests (e.g., to prevent or support them)
+export async function loader({ request }) {
+  return cors(
+    request,
+    json({ message: "GET method not allowed on this endpoint" }, { status: 405 })
+  );
+}
 
 export async function action({ request }) {
   const method = request.method;
-  let data = await request.formData();
-  data = Object.fromEntries(data);
-  const customerId = data.customerId;
-  const productId = data.productId;
-  const shop = data.shop;
 
+  if (method === "POST") {
+    let formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    const { customerId, productId, shop } = data;
 
-  if (!customerId || !productId || !shop) {
-    return json({
-      message: "Missing data. Required: customerId, productId, shop",
-      method,
-    });
-  }
+    if (!customerId || !productId || !shop) {
+      return cors(
+        request,
+        json(
+          {
+            message: "Missing data. Required: customerId, productId, shop",
+            method,
+          },
+          { status: 400 }
+        )
+      );
+    }
 
-  switch (method) {
-    case "POST":
+    try {
       const wishlist = await db.wishlist.create({
         data: {
           customerId,
@@ -29,17 +40,29 @@ export async function action({ request }) {
         },
       });
 
-      const response = json({
-        message: "Product added to wishlist",
-        method: "POST",
-        wishlist,
-      });
-
-      // eslint-disable-next-line no-undef
-      return cors(request, response); // assuming cors is defined
-    case "PATCH":
-      return json({ message: "Success", method: "PATCH" });
-    default:
-      return new Response("Method Not Allowed", { status: 405 });
+      return cors(
+        request,
+        json({
+          message: "Product added to wishlist",
+          method: "POST",
+          wishlist,
+        })
+      );
+    } catch (error) {
+      console.error("Wishlist creation error:", error);
+      return cors(
+        request,
+        json(
+          { message: "Failed to add to wishlist", error: error.message },
+          { status: 500 }
+        )
+      );
+    }
   }
+
+  if (method === "PATCH") {
+    return cors(request, json({ message: "PATCH not implemented yet", method }));
+  }
+
+  return new Response("Method Not Allowed", { status: 405 });
 }

@@ -31,7 +31,6 @@ export async function action({ request }) {
       id: "1"
     },
     update: {
-      id: "1",
       name : settings.name,
       description : settings.description
     },

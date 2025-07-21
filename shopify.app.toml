@@ -3,7 +3,7 @@
 client_id = "dfd1b089df3bb20342af9b9eda37e563"
 name = "wishlist-text"
 handle = "wishlist-text"
-application_url = "https://grant-examines-ashley-mg.trycloudflare.com"
+application_url = "https://robbie-guests-manager-houses.trycloudflare.com"
 embedded = true
 
 [build]
@@ -26,7 +26,7 @@ api_version = "2025-07"
 scopes = "write_products"
 
 [auth]
-redirect_urls = ["https://grant-examines-ashley-mg.trycloudflare.com/auth/callback", "https://grant-examines-ashley-mg.trycloudflare.com/auth/shopify/callback", "https://grant-examines-ashley-mg.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://robbie-guests-manager-houses.trycloudflare.com/auth/callback", "https://robbie-guests-manager-houses.trycloudflare.com/auth/shopify/callback", "https://robbie-guests-manager-houses.trycloudflare.com/api/auth/callback"]
 
 [pos]
 embedded = false
