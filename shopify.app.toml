@@ -3,7 +3,7 @@
 client_id = "dfd1b089df3bb20342af9b9eda37e563"
 name = "wishlist-text"
 handle = "wishlist-text"
-application_url = "https://providers-copyright-nepal-stockholm.trycloudflare.com"
+application_url = "https://fought-responsibility-specialists-westminster.trycloudflare.com"
 embedded = true
 
 [build]
@@ -26,7 +26,7 @@ api_version = "2025-07"
 scopes = "write_products"
 
 [auth]
-redirect_urls = ["https://providers-copyright-nepal-stockholm.trycloudflare.com/auth/callback", "https://providers-copyright-nepal-stockholm.trycloudflare.com/auth/shopify/callback", "https://providers-copyright-nepal-stockholm.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://fought-responsibility-specialists-westminster.trycloudflare.com/auth/callback", "https://fought-responsibility-specialists-westminster.trycloudflare.com/auth/shopify/callback", "https://fought-responsibility-specialists-westminster.trycloudflare.com/api/auth/callback"]
 
 [pos]
 embedded = false

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { json } from "@remix-run/node";
 import {
   Page,
@@ -43,15 +43,27 @@ export const action = async ({ request }) => {
 };
 
 export default function Index() {
-  const wishlistData = useLoaderData()
-  console.log(wishlistData, "this is data");
+ const wishlistData = useLoaderData();
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); 
+
+    return () => clearInterval(interval); 
+  }, []);
+
   const wishlistArray = wishlistData.map((item) => {
-  console.log(item.createAt, "this is time")
-  const createdAt = item.createAt
-    ? formatDistanceToNow(new Date(item.createAt), { addSuffix: true })
-    : "Unknown";
-  return [item.customerId, item.productId, createdAt];
-});
+    const createdAt = item.createAt
+      ? formatDistanceToNow(new Date(item.createAt), {
+          addSuffix: true,
+          includeSeconds: false, 
+          now: currentTime.getTime()
+        })
+      : "Unknown";
+    return [item.customerId, item.productId, createdAt];
+  });
 
 
 
@@ -108,17 +120,17 @@ export default function Index() {
 
                     <InlineStack align="space-between">
                       <Text as="span" variant="bodyMd">
-                        Course content
+                        Create App
                       </Text>
-                      <Link url="https://youtube.com/codeinspire" target="_blank" removeUnderline>
-                        Codeinspire
+                      <Link url="#" target="_blank" removeUnderline>
+                        My App
                       </Link>
                     </InlineStack>
                     <InlineStack align="space-between">
                       <Text as="span" variant="bodyMd">
                         Source code
                       </Text>
-                      <Link url="https://github.com/Hujjat" target="_blank" removeUnderline>
+                      <Link url="https://github.com/MdAlAmin212104/wishlist" target="_blank" removeUnderline>
                         Github
                       </Link>
                     </InlineStack>
